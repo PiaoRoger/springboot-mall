@@ -1,6 +1,7 @@
 package com.piao.springbootmall.controller;
 
 import com.piao.springbootmall.constant.ProductCategory;
+import com.piao.springbootmall.dto.ProductQueryParams;
 import com.piao.springbootmall.dto.ProductRequest;
 import com.piao.springbootmall.model.Product;
 import com.piao.springbootmall.service.ProductService;
@@ -19,7 +20,10 @@ public class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
                                                      @RequestParam(required = false) String search) {
-        List<Product> products = productService.getProducts(category, search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setProductCategory(category);
+        productQueryParams.setSearch(search);
+        List<Product> products = productService.getProducts(productQueryParams);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
     @GetMapping("/products/{productId}")
