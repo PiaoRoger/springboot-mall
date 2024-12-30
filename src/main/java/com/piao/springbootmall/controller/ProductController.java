@@ -1,5 +1,6 @@
 package com.piao.springbootmall.controller;
 
+import com.piao.springbootmall.constant.ProductCategory;
 import com.piao.springbootmall.dto.ProductRequest;
 import com.piao.springbootmall.model.Product;
 import com.piao.springbootmall.service.ProductService;
@@ -16,8 +17,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts() {
-        List<Product> products = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) ProductCategory category,
+                                                     @RequestParam(required = false) String search) {
+        List<Product> products = productService.getProducts(category, search);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
     @GetMapping("/products/{productId}")
